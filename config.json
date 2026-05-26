@@ -1,0 +1,9 @@
+﻿{
+    "app_name": "CodeMind AI",
+    "app_emoji": "🧠",
+    "api_model": "llama-3.3-70b-versatile",
+    "temperature": 0.7,
+    "max_tokens": 4000,
+    "parametros_especificos": "Análisis profundo y optimización de código, soporte multi-lenguaje.",
+    "theme": "dark"
+}

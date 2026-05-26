@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>CodeMind AI 🧠 | Asistente de Código IA</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Contenedor de partículas de fondo -->
+    <div id="particles-container" class="particles-container"></div>
+
+    <div class="app-container">
+        <!-- Header principal con shimmer -->
+        <header class="header fade-in-down">
+            <div class="logo-shimmer">
+                <span class="logo-emoji">🧠✨</span>
+                <h1>CodeMind AI</h1>
+                <span class="logo-emoji">⚡🤖</span>
+            </div>
+            <p class="description">Analiza 📊 · Optimiza 🚀 · Genera 🧪 · Tu código, elevado por IA</p>
+            <div class="header-actions">
+                <button id="themeToggle" class="icon-btn" aria-label="Cambiar tema">🌙</button>
+                <div class="api-wrapper">
+                    <input type="password" id="apiKeyInput" placeholder="🔑 API Key (Groq/OpenAI)" autocomplete="off">
+                    <span class="api-hint">💡 Guardada automáticamente</span>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <!-- Área de subida y entrada de código -->
+            <div class="grid-2col">
+                <div class="card slide-in-up">
+                    <div class="card-header">
+                        <span>📂 Código fuente</span>
+                        <span class="badge pulse-badge">⬅️ Arrastra / selecciona</span>
+                    </div>
+                    <div id="dropZone" class="drop-zone wave-emoji">
+                        <div class="drop-icon">📁✨</div>
+                        <p>Arrastra y suelta tu archivo (JS, PY, JAVA, HTML, etc)</p>
+                        <input type="file" id="fileInput" accept=".js,.py,.java,.cpp,.c,.cs,.html,.css,.txt,.json,.ts,.rb,.go" style="display:none">
+                        <button id="selectFileBtn" class="btn-secondary">📂 Seleccionar archivo</button>
+                        <div id="fileNameBadge" class="file-badge pop-in-hidden">📄 Ningún archivo cargado</div>
+                    </div>
+                    <textarea id="codeInput" rows="10" placeholder="// ✍️ Escribe o pega tu código aquí...&#10;function ejemplo() { console.log('✨ Hola IA'); }"></textarea>
+                    <div class="lang-row">
+                        <label>🏷️ Lenguaje:</label>
+                        <select id="languageSelect">
+                            <option value="javascript">JavaScript</option>
+                            <option value="python">Python</option>
+                            <option value="java">Java</option>
+                            <option value="cpp">C++</option>
+                            <option value="csharp">C#</option>
+                            <option value="html">HTML/CSS</option>
+                            <option value="ruby">Ruby</option>
+                            <option value="go">Go</option>
+                        </select>
+                    </div>
+                    <div class="action-buttons">
+                        <button id="analyzeBtn" class="btn-primary ripple">🔍 Analizar código</button>
+                        <button id="optimizeBtn" class="btn-primary ripple">⚡ Optimizar código</button>
+                    </div>
+                </div>
+
+                <div class="card slide-in-up">
+                    <div class="card-header">
+                        <span>🏆 Puntaje de calidad</span>
+                        <span class="emoji-wave">🌀🧠</span>
+                    </div>
+                    <div class="score-container">
+                        <div id="scoreCircleWrapper" class="score-circle rotate-in">
+                            <canvas id="scoreCanvas" width="120" height="120"></canvas>
+                            <span id="scorePercent" class="score-text">0%</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div id="progressBarFill" class="progress-fill gradient-shift"></div>
+                        </div>
+                        <div class="info-score">⭐ Análisis IA genera puntuación</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel de análisis detallado -->
+            <div class="card slide-in-left" id="analysisCard">
+                <div class="card-header">
+                    <span>📋 Análisis profundo <span class="wiggle-emoji">🔍✨</span></span>
+                    <button id="exportAnalysisBtn" class="btn-icon">💾 Exportar</button>
+                </div>
+                <div id="analysisResult" class="result-content">
+                    <div class="placeholder-text">🤖 Haz clic en "Analizar código" para ver sugerencias y métricas.</div>
+                </div>
+            </div>
+
+            <!-- Panel de optimización -->
+            <div class="card slide-in-left">
+                <div class="card-header">
+                    <span>⚙️ Código optimizado <span class="bounce-emoji">🚀💎</span></span>
+                    <button id="copyOptimizedBtn" class="btn-icon">📋 Copiar</button>
+                    <button id="downloadOptimizedBtn" class="btn-icon">⬇️ Descargar</button>
+                </div>
+                <div id="optimizationResult" class="result-content code-block">
+                    <div class="placeholder-text">✨ Aquí aparecerá tu código mejorado.</div>
+                </div>
+            </div>
+
+            <!-- Generador de código desde prompt -->
+            <div class="card slide-in-up">
+                <div class="card-header">
+                    <span>🧪 Generador creativo</span>
+                    <span class="pulse-emoji">✨🤖</span>
+                </div>
+                <div class="generator-row">
+                    <input type="text" id="generatePrompt" placeholder="Ej: 'función que ordene array de objetos por fecha' 🔮">
+                    <button id="generateBtn" class="btn-primary ripple">🎨 Generar código</button>
+                </div>
+                <div class="card-subheader">
+                    <button id="copyGeneratedBtn" class="btn-icon">📋 Copiar generado</button>
+                    <button id="downloadGeneratedBtn" class="btn-icon">⬇️ Descargar</button>
+                </div>
+                <div id="generatedCodeResult" class="result-content code-block">
+                    <div class="placeholder-text">💡 Describe lo que necesitas, la IA te dará el código.</div>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <span>💜 CodeMind AI — análisis inteligente con Groq/OpenAI | <span id="modelBadge" class="model-badge">Modelo: cargando...</span></span>
+        </footer>
+    </div>
+
+    <!-- Toast notifications container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
